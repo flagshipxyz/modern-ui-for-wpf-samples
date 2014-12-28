@@ -1,18 +1,7 @@
-﻿using FirstFloor.ModernUI.Windows.Controls;
+﻿using FirstFloor.ModernUI.Presentation;
+using FirstFloor.ModernUI.Windows.Controls;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.IO;
 
 namespace ModernUIforWPF_Samples
 {
@@ -24,6 +13,25 @@ namespace ModernUIforWPF_Samples
         public MainWindow()
         {
             InitializeComponent();
+
+            string dir = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            _appearanceSettingsPath = Path.Combine(dir, "AppearanceSettings.xml");
+
+            AppearanceSettings.Load(_appearanceSettingsPath);
+
+            AppearanceManager.Current.ThemeSource = new Uri(AppearanceSettings.Instance.ThemeSource, UriKind.Relative);
+            AppearanceManager.Current.FontSize = AppearanceSettings.Instance.FontSize;
+            AppearanceManager.Current.AccentColor = AppearanceSettings.Instance.AccentColor;
+
+            this.Closed += MainWindow_Closed;
+
+        }
+
+        string _appearanceSettingsPath = string.Empty;
+
+        void MainWindow_Closed(object sender, EventArgs e)
+        {
+            AppearanceSettings.Save(_appearanceSettingsPath);
         }
     }
 }

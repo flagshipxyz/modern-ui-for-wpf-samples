@@ -116,6 +116,9 @@ namespace ModernUIforWPF_Samples.Pages.Settings
 
                     // and update the actual theme
                     AppearanceManager.Current.ThemeSource = value.Source;
+
+                    AppearanceSettings.Instance.ThemeSource = AppearanceManager.Current.ThemeSource.OriginalString;
+
                 }
             }
         }
@@ -131,18 +134,20 @@ namespace ModernUIforWPF_Samples.Pages.Settings
                     OnPropertyChanged("SelectedFontSize");
 
                     AppearanceManager.Current.FontSize = value == FontLarge ? FontSize.Large : FontSize.Small;
-                }
+
+                    AppearanceSettings.Instance.FontSize = AppearanceManager.Current.FontSize;
+}
             }
         }
 
         public Color SelectedAccentColor
         {
-            get { return this.selectedAccentColor; }
+            get { return AppearanceSettings.Instance.AccentColor; }
             set
             {
-                if (this.selectedAccentColor != value)
+                if (AppearanceSettings.Instance.AccentColor != value)
                 {
-                    this.selectedAccentColor = value;
+                    AppearanceSettings.Instance.AccentColor = value;
                     OnPropertyChanged("SelectedAccentColor");
 
                     AppearanceManager.Current.AccentColor = value;
