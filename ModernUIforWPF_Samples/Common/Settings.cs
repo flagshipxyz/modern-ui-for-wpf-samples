@@ -2,6 +2,9 @@
 
 namespace ModernUIforWPF_Samples
 {
+    /// <summary>
+    /// シリアライズ対象クラスのひな形
+    /// </summary>
     [Serializable]
     public class Settings
     {
